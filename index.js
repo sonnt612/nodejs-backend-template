@@ -24,7 +24,8 @@ const tokenToUserMiddleware = require('./lib/middleware/tokenToUser');
 const verifyTokenMiddleware = require('./lib/middleware/verifyToken');
 
 // Handle routes
-const ApiRoutes = require('./lib/routes/api');
+const AuthRoutes = require('./lib/routes/auth');
+const UserRoutes = require('./lib/routes/user');
 
 // Start server
 const app = express();
@@ -49,10 +50,10 @@ const declareRoute = (method, routeName, middlewares = [], destinationRoute) => 
 };
 
 // API Routes - Example routes for the template
-declareRoute('post', '/auth/login', [], ApiRoutes.auth.login);
-declareRoute('post', '/auth/register', [], ApiRoutes.auth.register);
-declareRoute('post', '/user/profile', [tokenToUserMiddleware], ApiRoutes.user.profile);
-declareRoute('post', '/user/update', [tokenToUserMiddleware], ApiRoutes.user.update);
+declareRoute('post', '/auth/login', [], AuthRoutes.login);
+declareRoute('post', '/auth/register', [], AuthRoutes.register);
+declareRoute('post', '/user/profile', [tokenToUserMiddleware], UserRoutes.profile);
+declareRoute('post', '/user/update', [tokenToUserMiddleware], UserRoutes.update);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
